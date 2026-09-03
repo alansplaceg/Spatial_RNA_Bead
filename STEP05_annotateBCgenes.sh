@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-IN="UDP7_scaffold_groups_filtered.tsv"
-OUT="UDP7_scaffold_groups_filtered_annotated.tsv"
+sample="${1:?Usage: STEP05_annotateBCgenes.sh SAMPLE}"
+IN="${sample}_scaffold_groups_filtered.tsv"
+OUT="${sample}_scaffold_groups_filtered_annotated.tsv"
+
+[[ -f "$IN" ]] || {
+    echo "ERROR: Missing $IN" >&2
+    exit 1
+}
 
 awk -F'\t' -v OFS='\t' '
 

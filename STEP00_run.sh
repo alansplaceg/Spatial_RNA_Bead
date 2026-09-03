@@ -30,3 +30,13 @@ printf 'Complete R1/R2 pairs: %d\n' "$pair_count"
 printf 'Running STEP01...\n'
 
 python3 "$SCRIPT_DIR/STEP01_getBCs.py"
+
+for r1_file in "${r1_files[@]}"; do
+    sample="${r1_file%_R1.fastq.gz}"
+
+    printf '\nRunning downstream steps for %s...\n' "$sample"
+    bash "$SCRIPT_DIR/STEP02_dedupBC.sh" "$sample"
+    bash "$SCRIPT_DIR/STEP03_FindScaffold.sh" "$sample"
+    bash "$SCRIPT_DIR/STEP04_getSameScaffold.sh" "$sample"
+    bash "$SCRIPT_DIR/STEP05_annotateBCgenes.sh" "$sample"
+done

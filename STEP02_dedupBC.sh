@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-for f in UDP8_extracted_barcodes.tsv; do
+sample="${1:?Usage: STEP02_dedupBC.sh SAMPLE}"
+f="${sample}_extracted_barcodes.tsv"
+
+[[ -f "$f" ]] || {
+    echo "ERROR: Missing $f" >&2
+    exit 1
+}
+
     out="${f%.tsv}_counted.tsv"
 
     echo "Processing $f"
@@ -34,4 +41,3 @@ for f in UDP8_extracted_barcodes.tsv; do
     } > "$out"
 
     echo "Wrote $out"
-done

@@ -4,14 +4,15 @@ set -euo pipefail
 export LC_ALL=C
 
 DIR="."
+SAMPLE="${1:?Usage: STEP04_getSameScaffold.sh SAMPLE}"
 
-IN="$DIR/UDP6_scaffold_matches.tsv"
+IN="$DIR/${SAMPLE}_scaffold_matches.tsv"
 
-RAW="$DIR/UDP6_scaffold_groups_raw.tsv"
-FILTERED="$DIR/UDP6_scaffold_groups_filtered.tsv"
+RAW="$DIR/${SAMPLE}_scaffold_groups_raw.tsv"
+FILTERED="$DIR/${SAMPLE}_scaffold_groups_filtered.tsv"
 
 SORT_TMP="$DIR/sort_tmp"
-KEEP="$SORT_TMP/UDP6_scaffolds_keep.txt"
+KEEP="$SORT_TMP/${SAMPLE}_scaffolds_keep.txt"
 
 THREADS=16
 SORT_MEM="50%"

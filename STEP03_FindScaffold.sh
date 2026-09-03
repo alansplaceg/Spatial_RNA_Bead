@@ -4,15 +4,16 @@ set -euo pipefail
 export LC_ALL=C
 
 DIR="."
+SAMPLE="${1:?Usage: STEP03_FindScaffold.sh SAMPLE}"
 
 SCAFFOLDS="/mnt/spatialdata/Scripts/Spatial_RNA_Bead/Bub_barcodes_collapsed.tsv"
-READS="$DIR/UDP6_extracted_barcodes_counted.tsv"
+READS="$DIR/${SAMPLE}_extracted_barcodes_counted.tsv"
 
-OUT="$DIR/UDP6_scaffold_matches.tsv"
+OUT="$DIR/${SAMPLE}_scaffold_matches.tsv"
 INDEX="$DIR/Bub_position_index.tsv"
 
 SORT_TMP="$DIR/sort_tmp"
-READ_KEYS="$SORT_TMP/UDP6_read_keys.tsv"
+READ_KEYS="$SORT_TMP/${SAMPLE}_read_keys.tsv"
 
 THREADS=16
 SORT_MEM="50%"
