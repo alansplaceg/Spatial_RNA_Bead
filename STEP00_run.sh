@@ -2,14 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TARGET_DIR="${1:-$PWD}"
-
-if [[ ! -d "$TARGET_DIR" ]]; then
-    echo "ERROR: FASTQ directory does not exist: $TARGET_DIR" >&2
-    exit 1
-fi
-
-cd "$TARGET_DIR"
+TARGET_DIR="$PWD"
 
 shopt -s nullglob
 r1_files=( *_R1.fastq.gz )
