@@ -1,7 +1,8 @@
-import gzip, os
+import gzip
+import glob
+import os
 from concurrent.futures import ProcessPoolExecutor
 
-FILES = [f"UDP{i}" for i in range(1, 10)]
 MAX_WORKERS = 3
 
 def reverse_complement(seq):
@@ -9,10 +10,10 @@ def reverse_complement(seq):
     return seq.translate(complement)[::-1]
 
 
-def process_sample(sample):
+def process_sample(files):
 
-    r1_file = f"{sample}_R1.fastq.gz"
-    r2_file = f"{sample}_R2.fastq.gz"
+    sample, r1_file, r2_file = files
+
     outfile = f"{sample}_extracted_barcodes.tsv"
 
     total = 0
@@ -73,14 +74,25 @@ def process_sample(sample):
 
 def main():
 
-    files = [
-        fq for fq in FILES
-        if os.path.exists(fq)
-    ]
+    files = []
 
-    for fq in FILES:
-        if not os.path.exists(fq):
-            print("Missing:", fq)
+    for r1_file in sorted(glob.glob("*_R1.fastq.gz")):
+        sample = r1_file.removesuffix("_R1.fastq.gz")
+        r2_file = f"{sample}_R2.fastq.gz"
+
+        if os.path.exists(r2_file):
+            files.append((sample, r1_file, r2_file))
+        else:
+            print("Missing:", r2_file)
+
+    r1_samples = {
+        r1.removesuffix("_R1.fastq.gz")
+        for r1 in glob.glob("*_R1.fastq.gz")
+    }
+    for r2_file in sorted(glob.glob("*_R2.fastq.gz")):
+        sample = r2_file.removesuffix("_R2.fastq.gz")
+        if sample not in r1_samples:
+            print("Missing:", f"{sample}_R1.fastq.gz")
 
     with ProcessPoolExecutor(
         max_workers=MAX_WORKERS

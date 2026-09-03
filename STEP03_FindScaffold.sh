@@ -5,7 +5,7 @@ export LC_ALL=C
 
 DIR="."
 
-SCAFFOLDS="$DIR/Bub_barcodes_collapsed.tsv"
+SCAFFOLDS="/mnt/spatialdata/Scripts/Spatial_RNA_Bead/Bub_barcodes_collapsed.tsv"
 READS="$DIR/UDP6_extracted_barcodes_counted.tsv"
 
 OUT="$DIR/UDP6_scaffold_matches.tsv"
