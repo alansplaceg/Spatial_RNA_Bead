@@ -11,6 +11,7 @@ READS="$DIR/${SAMPLE}_extracted_barcodes_counted.tsv"
 
 OUT="$DIR/${SAMPLE}_scaffold_matches.tsv"
 INDEX="$DIR/Bub_position_index.tsv"
+INDEX_META="$DIR/Bub_position_index.source"
 
 SORT_TMP="$DIR/sort_tmp"
 READ_KEYS="$SORT_TMP/${SAMPLE}_read_keys.tsv"
@@ -60,7 +61,13 @@ echo
 # For ambiguous barcodes, retain ALL matching scaffold IDs.
 # ============================================================
 
-if [[ ! -s "$INDEX" ]]; then
+SCAFFOLD_SIGNATURE="$(stat -c '%s:%Y' "$SCAFFOLDS")"
+CACHED_SIGNATURE=""
+if [[ -s "$INDEX_META" ]]; then
+    CACHED_SIGNATURE="$(cat "$INDEX_META")"
+fi
+
+if [[ ! -s "$INDEX" || "$CACHED_SIGNATURE" != "$SCAFFOLDS"$'\n'"$SCAFFOLD_SIGNATURE" ]]; then
 
     echo "Building scaffold index..."
 
@@ -121,6 +128,8 @@ if [[ ! -s "$INDEX" ]]; then
     ' > "${INDEX}.tmp"
 
     mv "${INDEX}.tmp" "$INDEX"
+    printf '%s\n%s\n' "$SCAFFOLDS" "$SCAFFOLD_SIGNATURE" > "${INDEX_META}.tmp"
+    mv "${INDEX_META}.tmp" "$INDEX_META"
 
     echo "Index created:"
     echo "$INDEX"
