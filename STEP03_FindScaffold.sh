@@ -6,7 +6,7 @@ export LC_ALL=C
 DIR="."
 SAMPLE="${1:?Usage: STEP03_FindScaffold.sh SAMPLE}"
 
-SCAFFOLDS="/mnt/spatialdata/Scripts/Spatial_RNA_Bead/Bub_barcodes_collapsed.tsv"
+SCAFFOLDS="/mnt/spatialdata/FastqData/1HBpreseq/Bub_barcodes_combined.tsv"
 READS="$DIR/${SAMPLE}_extracted_barcodes_counted.tsv"
 
 OUT="$DIR/${SAMPLE}_scaffold_matches.tsv"
