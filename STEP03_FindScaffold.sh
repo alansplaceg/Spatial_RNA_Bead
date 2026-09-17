@@ -10,8 +10,10 @@ SCAFFOLDS="/mnt/spatialdata/FastqData/1HBpreseq/Bub_barcodes_combined.tsv"
 READS="$DIR/${SAMPLE}_extracted_barcodes_counted.tsv"
 
 OUT="$DIR/${SAMPLE}_scaffold_matches.tsv"
-INDEX="$DIR/Bub_position_index.tsv"
-INDEX_META="$DIR/Bub_position_index.source"
+
+INDEX_DIR="/mnt/spatialdata/Scripts/Spatial_RNA_Bead"
+INDEX="$INDEX_DIR/Bub_position_index.tsv"
+INDEX_META="$INDEX_DIR/Bub_position_index.source"
 
 SORT_TMP="$DIR/sort_tmp"
 READ_KEYS="$SORT_TMP/${SAMPLE}_read_keys.tsv"
@@ -19,7 +21,7 @@ READ_KEYS="$SORT_TMP/${SAMPLE}_read_keys.tsv"
 THREADS=16
 SORT_MEM="50%"
 
-mkdir -p "$SORT_TMP"
+mkdir -p "$SORT_TMP" "$INDEX_DIR"
 
 echo "Scaffolds : $SCAFFOLDS"
 echo "Reads     : $READS"
